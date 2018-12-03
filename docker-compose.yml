@@ -1,0 +1,67 @@
+version: '3.7'
+services:
+  configuration-service:
+    container_name: configuration-service
+    build:
+      context: ./configuration-service
+      dockerfile: Dockerfile
+    image: pgarneau/configuration-service:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=7777
+    expose:
+      - 7777
+    ports:
+      - 7777:7777
+    networks:
+      - notificus-network
+
+  notification-service:
+    container_name: notification-service
+    build:
+      context: ./notification-service
+      dockerfile: Dockerfile
+    image: pgarneau/notification-service:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=9999
+    expose:
+      - 9999
+    ports:
+      - 9999:9999
+    networks:
+      - notificus-network
+    depends_on:
+      - configuration-service
+
+  configuration-web-app-bff:
+    container_name: configuration-web-app-bff
+    build:
+      context: ./configuration-web-app-angular/backend
+      dockerfile: Dockerfile
+    image: pgarneau/configuration-web-app-bff:latest
+    expose:
+      - 4000
+    ports:
+      - 4000:4000
+    tty: true
+    networks:
+      - notificus-network
+
+  configuration-web-app:
+    container_name: configuration-web-app
+    build:
+      context: ./configuration-web-app-angular/frontend
+      dockerfile: Dockerfile
+    image: pgarneau/configuration-web-app:latest
+    expose:
+      - 4200
+    ports:
+      - 4200:4200
+    tty: true
+    networks:
+      - notificus-network
+
+networks:
+  notificus-network:
+    driver: bridge
