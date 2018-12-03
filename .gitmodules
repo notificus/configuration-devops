@@ -1,9 +1,0 @@
-[submodule "configuration-service"]
-	path = configuration-service
-	url = git@github.com:notificus/configuration-service.git
-[submodule "notification-service"]
-	path = notification-service
-	url = git@github.com:notificus/notification-service.git
-[submodule "configuration-web-app-angular"]
-	path = configuration-web-app-angular
-	url = git@github.com:notificus/configuration-web-app-angular.git

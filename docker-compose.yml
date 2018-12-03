@@ -2,10 +2,7 @@ version: '3.7'
 services:
   configuration-service:
     container_name: configuration-service
-    build:
-      context: ./configuration-service
-      dockerfile: Dockerfile
-    image: pgarneau/configuration-service:latest
+    image: notificus/configuration-service:latest
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - SERVER_PORT=7777
@@ -18,10 +15,7 @@ services:
 
   notification-service:
     container_name: notification-service
-    build:
-      context: ./notification-service
-      dockerfile: Dockerfile
-    image: pgarneau/notification-service:latest
+    image: notificus/notification-service:latest
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - SERVER_PORT=9999
@@ -36,10 +30,9 @@ services:
 
   configuration-web-app-bff:
     container_name: configuration-web-app-bff
-    build:
-      context: ./configuration-web-app-angular/backend
-      dockerfile: Dockerfile
-    image: pgarneau/configuration-web-app-bff:latest
+    image: notificus/configuration-web-app-bff:latest
+    environment:
+      - CONFIGURATION_SERVICE_URL=http://configuration-service:7777
     expose:
       - 4000
     ports:
@@ -50,10 +43,7 @@ services:
 
   configuration-web-app:
     container_name: configuration-web-app
-    build:
-      context: ./configuration-web-app-angular/frontend
-      dockerfile: Dockerfile
-    image: pgarneau/configuration-web-app:latest
+    image: notificus/configuration-web-app:latest
     expose:
       - 4200
     ports:

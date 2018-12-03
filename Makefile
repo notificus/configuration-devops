@@ -1,5 +1,11 @@
-all: build
-build:
-	git submodule init
-	git submodule update --recursive --remote
-	docker-compose build
+all: logout login run
+
+run:
+	docker-compose pull
+	docker-compose up
+
+login:
+	docker login -u notificus -p c2Mwk-Mc
+
+logout:
+	docker logout
