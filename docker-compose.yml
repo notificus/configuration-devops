@@ -8,8 +8,6 @@ services:
       - SERVER_PORT=7777
     expose:
       - 7777
-    ports:
-      - 7777:7777
     networks:
       - notificus-network
 
@@ -21,8 +19,6 @@ services:
       - SERVER_PORT=9999
     expose:
       - 9999
-    ports:
-      - 9999:9999
     networks:
       - notificus-network
     depends_on:
@@ -51,6 +47,18 @@ services:
     tty: true
     networks:
       - notificus-network
+
+  test-image:
+    container_name: test-image
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: notificus/test-image
+    tty: true
+    stdin_open: true
+    networks:
+      - notificus-network
+
 
 networks:
   notificus-network:

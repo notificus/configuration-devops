@@ -1,0 +1,1 @@
+curl -d '{"cip": "garp2405", "course": "GIF650"}' -H "Content-Type: application/json" -X POST http://notification-service:9999/grades
